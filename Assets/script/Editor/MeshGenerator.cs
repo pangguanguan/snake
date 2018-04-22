@@ -42,20 +42,26 @@ public class MeshGenerator {
     [MenuItem("Utility/MeshGenerator/Snake")]
     static void GenerateSnake()
     {
+        float len = 1;
+        float topScale = 0.7f;
+
+        float hLen = len / 2.0f;
+        float hTopLen = topScale * len / 2.0f;
+
         var verts = new Vector3[]
         {
-            new Vector3(-2, 0, 2),
-            new Vector3(2, 0, 2),
-            new Vector3(2, 0, -2),
-            new Vector3(-2, 0, -2),
-            new Vector3(-1, 1, 1),
-            new Vector3(1, 1, 1),
-            new Vector3(1, 1, -1),
-            new Vector3(-1, 1, -1),
-            new Vector3(-1, -1, 1),
-            new Vector3(1, -1, 1),
-            new Vector3(1, -1, -1),
-            new Vector3(-1, -1, -1)
+            new Vector3(-hLen, 0, hLen),
+            new Vector3(hLen, 0, hLen),
+            new Vector3(hLen, 0, -hLen),
+            new Vector3(-hLen, 0, -hLen),
+            new Vector3(-hTopLen, hTopLen, hTopLen),
+            new Vector3(hTopLen, hTopLen, hTopLen),
+            new Vector3(hTopLen, hTopLen, -hTopLen),
+            new Vector3(-hTopLen, hTopLen, -hTopLen),
+            new Vector3(-hTopLen, -hTopLen, hTopLen),
+            new Vector3(hTopLen, -hTopLen, hTopLen),
+            new Vector3(hTopLen, -hTopLen, -hTopLen),
+            new Vector3(-hTopLen, -hTopLen, -hTopLen)
         };
 
         var vertTris = new int[]
