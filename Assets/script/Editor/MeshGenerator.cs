@@ -24,6 +24,14 @@ public class MeshGenerator {
             new Vector2(0, 0)
         };
 
+        mesh.normals = new Vector3[]
+        {
+            Vector3.up,
+            Vector3.up,
+            Vector3.up,
+            Vector3.up
+        };
+
         mesh.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
 
         var path = EditorUtility.SaveFilePanelInProject(
@@ -104,6 +112,7 @@ public class MeshGenerator {
 
         var meshVerts = new Vector3[num];
         var meshUvs = new Vector2[num];
+        var meshNormals = new Vector3[num];
         var meshTris = new int[num];
 
         for (int i = 0; i < num; i++)
@@ -113,11 +122,28 @@ public class MeshGenerator {
             meshTris[i] = i;
         }
 
+        for (int i = 0; i < num / 3; i++)
+        {
+            var a = verts[vertTris[i * 3]];
+            var b = verts[vertTris[i * 3 + 1]];
+            var c = verts[vertTris[i * 3 + 2]];
+
+            var ab = b - a;
+            var ac = c - a;
+
+            var n = Vector3.Cross(ab, ac);
+            n.Normalize();
+
+            for (int j = 0; j < 3; j++)
+                meshNormals[i * 3 + j] = n;
+        }
+
         var mesh = new Mesh();
 
         mesh.vertices = meshVerts;
         mesh.uv = meshUvs;
         mesh.triangles = meshTris;
+        mesh.normals = meshNormals;
 
         var path = EditorUtility.SaveFilePanelInProject(
             "Save Mesh in Assets",
